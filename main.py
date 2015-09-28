@@ -3,16 +3,12 @@ from constraints import status
 from heuristic import heu1
 from variables_class import Solution
 from metaheuristic import metaN1,metaN2,metaN3
-import time
 import numpy as np
-start_time=time.time()
-
-
 
 file="data.xlsx"
-d=Data(file,1,230,50)
+m= int(raw_input("No. of days: "))
+d=Data(file,m,230,50)
 
-print ("- %s seconds xlsx -" % (time.time()-start_time))
 empty_route=np.array([[0,d.n+1]]*d.m)
 rmvd=[[]]*d.m
 
@@ -42,11 +38,9 @@ while iterations<40:
 		else:
 			metaheu=metaheu+1
 	iterations=iterations+1
+
 print best_sol.R
 print best_p 
-print ("- %s seconds -" % (time.time()-start_time))
-#print best_sol.pi-best_sol.a
-#print sol.a[p[:][0],0]
-#print sol.pi[p[:][0],0]
+
 
 
