@@ -8,7 +8,7 @@ e=data[:,4]
 l=data[:,5]
 T=data[:,6]
 n=data.shape[0]-2
-m=2
+m=3
 M=10000
 Tmax=230
 Q=50
@@ -41,7 +41,7 @@ class Solution:
                 self.pi[R[i][j+1],i]=max(self.a[R[i][j+1],i],e[R[i][j+1]])
             self.y[R[i][-1],i]=1
     
-    def __init__(self,R=np.array([[0,n+1],[0,n+1]])):
+    def __init__(self,R=np.array([[0,n+1]]*m)):
         self.R=R
         if np.sum(R!=0):
            self.update(R)
