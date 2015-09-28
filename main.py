@@ -1,5 +1,4 @@
-
-from read_data import read, find_segments
+from data_class import Data
 from constraints import status
 from heuristic import heu1
 from variables_class import Solution
@@ -7,27 +6,20 @@ from metaheuristic import metaN1,metaN2,metaN3
 import time
 import numpy as np
 start_time=time.time()
-data=read("data.xlsx")
-t=find_segments(data[:,:2])
-p=data[:,2]
-d=data[:,3]
-e=data[:,4]
-l=data[:,5]
-T=data[:,6]
-n=data.shape[0]-2
-m=3
-M=10000
-Tmax=230
-Q=50
-print ("- %s seconds xlsx -" % (time.time()-start_time))
-rmvd=[]
 
-sol=Solution()
-rmvd=[[]]*m
-new_sol= heu1(sol,rmvd)
-#print new_sol.R
+
+
+file="data.xlsx"
+d=Data(file,1,230,50)
+
+print ("- %s seconds xlsx -" % (time.time()-start_time))
+empty_route=np.array([[0,d.n+1]]*d.m)
+rmvd=[[]]*d.m
+
+sol=Solution(empty_route,d)
+new_sol= heu1(sol,rmvd,d)
 best_sol=new_sol
-best_p=status(new_sol,t,p,m,n,d,l,T,M,Q,Tmax)[1]
+best_p=status(new_sol,d)[1]
 iterations=0
 while iterations<40:
 	#print iterations
@@ -39,10 +31,10 @@ while iterations<40:
 			meta=metaN2(new_sol.R)
 		if metaheu==3:
 			meta=metaN3(new_sol.R)
-		sol=Solution(meta[0])
+		sol=Solution(meta[0],d)
 		rmvd=meta[1]
-		new_sol=heu1(sol,rmvd)
-		new_p=status(new_sol,t,p,m,n,d,l,T,M,Q,Tmax)[1]
+		new_sol=heu1(sol,rmvd,d)
+		new_p=status(new_sol,d)[1]
 		if new_p>best_p:
 			best_p=new_p
 			best_sol=new_sol
