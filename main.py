@@ -2,6 +2,7 @@ from read_data import read, find_segments
 from constraints import status
 from heuristic import heu1
 from variables_class import Solution
+from metaheuristic import metaN1,metaN2,metaN3
 import time
 import numpy as np
 
@@ -21,11 +22,34 @@ Q=50
 rmvd=[]
 start_time=time.time()
 sol=Solution()
-rmvd=np.array([[0,21],[0,21]])
-
+rmvd=[[0,21],[0,21]]
 new_sol= heu1(sol,rmvd)
-
-print status(new_sol,t,p,m,n,d,l,T,M,Q,Tmax)
+best_sol=new_sol
+best_p=status(new_sol,t,p,m,n,d,l,T,M,Q,Tmax)[1]
+iterations=0
+while iterations<40:
+	#print iterations
+	metaheu=1
+	while(metaheu<=3):
+		if metaheu==1:
+			meta=metaN1(new_sol.R)
+		if metaheu==2:
+			meta=metaN2(new_sol.R)
+		if metaheu==3:
+			meta=metaN3(new_sol.R)
+		sol=Solution(meta[0])
+		rmvd=meta[1]
+		new_sol=heu1(sol,rmvd)
+		new_p=status(new_sol,t,p,m,n,d,l,T,M,Q,Tmax)[1]
+		if new_p>best_p:
+			best_p=new_p
+			best_sol=new_sol
+			metaheu=1
+		else:
+			metaheu=metaheu+1
+	iterations=iterations+1
+print best_sol.R
+print best_p 
 print ("- %s seconds -" % (time.time()-start_time))
 #print len(sol.R[0])
 #print sol.a[p[:][0],0]

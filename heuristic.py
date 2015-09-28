@@ -39,7 +39,7 @@ def cost1(sol,temp,para,i,j,v):
 def heu1(sol,rmvd=[]):
     sol_temp=sol
     not_visited=sol_temp.not_visited
-    not_visited=np.union1d(not_visited,rmvd.ravel())
+    not_visited=np.union1d(not_visited,[item for sublist in rmvd for item in sublist])
     for i in range (sol_temp.R.shape[0]):
         to_be_visited=np.setdiff1d(not_visited,rmvd[i])
         j=1
@@ -59,6 +59,25 @@ def heu1(sol,rmvd=[]):
                 j=0
                 sol_temp=update
             j=j+1
+    
+    for i in range (sol_temp.R.shape[0]):
+        while j<len(sol_temp.R[i]):
+            flag=0
+            update=0
+            min_cost=999
+            for v in (rmvd[i]):
+                R_temp=insert_element(sol_temp.R,v,[i,j])
+                temp=Solution(R_temp)
+                cost=cost1(sol_temp,temp,[0.9,0.1,0.9,2],i,j,v)
+                if (cost<min_cost and status(temp,t,p,m,n,d,l,T,M,Q,Tmax)[0]):
+                    min_cost=cost
+                    flag=1
+                    update=temp
+            if flag==1:
+                j=0
+                sol_temp=update
+            j=j+1
+
                 
     return sol_temp
                 
