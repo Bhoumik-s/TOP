@@ -3,6 +3,7 @@ from constraints import status
 from heuristic import heu1
 from variables_class import Solution
 from metaheuristic import metaN1,metaN2,metaN3
+from plot import plotPlan
 import numpy as np
 
 file="data.xlsx"
@@ -17,7 +18,7 @@ new_sol= heu1(sol,rmvd,d)
 best_sol=new_sol
 best_p=status(new_sol,d)[1]
 iterations=0
-while iterations<40:
+while iterations<10:
 	#print iterations
 	metaheu=1
 	while(metaheu<=3):
@@ -41,6 +42,7 @@ while iterations<40:
 
 print best_sol.R
 print best_p 
+plotPlan(best_sol.R,d.points,d.m)
 
 
 
