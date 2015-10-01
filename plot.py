@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 
 def plotPlan(path, points, num_iters=1):
 
-    clr=['r','g','b','y']
+    clr=['r','g','b','y','v','i']
     """
     path: List of lists with the different orders in which the nodes are visited
     points: coordinates for the different nodes

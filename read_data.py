@@ -4,10 +4,10 @@ import xlrd
 def read(file):
     book = xlrd.open_workbook(file)
     worksheet = book.sheet_by_index(0)
-    data=np.zeros((worksheet.nrows,worksheet.ncols),dtype=int)
-    for i in range (worksheet.nrows):
+    data=np.zeros((worksheet.nrows-1,worksheet.ncols),dtype=int)
+    for i in range (worksheet.nrows-1):
         for j in range (worksheet.ncols):
-            data[i][j]=worksheet.cell(i,j).value
+            data[i][j]=worksheet.cell(i+1,j).value
     return data
 
 def find_segments(points):
@@ -17,3 +17,4 @@ def find_segments(points):
             distance[i][j]=pow(pow(points[i][0]-points[j][0],2)+pow(points[i][1]-points[j][1],2),0.5)
             distance[j][i]=distance[i][j]
     return distance
+
