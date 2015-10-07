@@ -7,7 +7,9 @@ from plot import plotPlan
 import numpy as np
 
 def plan(days):
-	file="c101.xlsx"
+
+	file="data.xlsx"
+	
 	d=Data(file,days,1236,100)
 	empty_route=np.array([[0,d.n+1]]*d.m)
 	rmvd=[[]]*d.m
